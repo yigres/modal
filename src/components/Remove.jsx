@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormGroup } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 const Remove = (props) => {
@@ -15,9 +14,7 @@ const Remove = (props) => {
       <p>
         {confirm}
       </p>
-      <FormGroup>
-        <input className="btn btn-danger" type="submit" value="Remove" />
-      </FormGroup>
+      <input className="btn btn-danger" type="submit" value="Remove" />
     </form>
   );
 };
