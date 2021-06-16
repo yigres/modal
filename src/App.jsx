@@ -1,53 +1,77 @@
 import React, { useState } from 'react';
 import { useImmer } from 'use-immer';
-import getModal from './modals/index.js';
+import 'bootstrap/dist/css/bootstrap.css';
 
-const renderTask = (v, i, handleRenameModalShow, handleRemoveModalShow) => {
-  const renderRemoveModal = () => {
-    handleRemoveModalShow(i);
-    // console.log(i);
-  };
-
-  const renderRenameModal = () => {
-    handleRenameModalShow(i);
-    // console.log(i);
-  };
-
-  return (
-    <div key={i}>
-      <span className="mr-3">{v}</span>
-      <button type="button" className="border-0 btn-link mr-3 p-0" data-testid="item-rename" onClick={renderRenameModal}>rename</button>
-      <button type="button" className="border-0 btn-link p-0" data-testid="item-remove" onClick={renderRemoveModal}>remove</button>
-    </div>
-  );
-};
+import Task from './Task';
+import AddModal from './modals/AddModal';
+import RemoveModal from './modals/RemoveModal';
+import RenameModal from './modals/RenameModal';
 
 const App = () => {
-  const [addModalShow, setAddModalShow] = useState(false);
-  const [removeModalState, setRemoveModalState] = useState(null);
-  const [renameModalState, setRenameModalState] = useImmer(null);
+  const [add, setAdd] = useState(false);
+  const [renameId, setRenameId] = useState(null);
+  const [removeId, setRemoveId] = useState(null);
   const [tasks, setTasks] = useImmer(['First Task!', 'Second Task!']);
 
-  const handleAddModalClose = () => setAddModalShow(false);
-  const handleAddModalShow = () => setAddModalShow(true);
-  const handleRemoveModalClose = () => setRemoveModalState(null);
-  const handleRemoveModalShow = (id) => setRemoveModalState(id);
-  const handleRenameModalClose = () => setRenameModalState(null);
-  const handleRenameModalShow = (id) => setRenameModalState(id);
+  const taskToRename = tasks[renameId] || '';
+  const taskToRemove = tasks[removeId] || '';
 
-  const AddModal = getModal('adding');
-  const RemoveModal = getModal('removing');
-  const RenameModal = getModal('renaming');
+  const addTask = (task) => {
+    setTasks((draft) => {
+      draft.push(task);
+    });
+  };
+
+  const renameTask = (task) => {
+    setTasks((draft) => {
+      draft[renameId] = task;
+    });
+  };
+
+  const removeTask = () => {
+    setTasks((draft) => {
+      delete draft[removeId];
+    });
+  };
+
+  const hideAddModal = () => setAdd(false);
+  const hideRenameModal = () => setRenameId(null);
+  const hideRemoveModal = () => setRemoveId(null);
+
+  const showAddModal = () => setAdd(true);
+  const createShowRenameModal = (id) => () => setRenameId(id);
+  const createShowRemoveModal = (id) => () => setRemoveId(id);
+
   return (
     <>
       <div className="mb-3">
-        <button type="button" onClick={handleAddModalShow} data-testid="item-add" className="btn btn-secondary">add</button>
+        <button type="button" onClick={showAddModal} data-testid="item-add" className="btn btn-secondary">add</button>
       </div>
-
-      <AddModal show={addModalShow} onHide={handleAddModalClose} tasks={tasks} setTasks={setTasks} />
-      <RemoveModal show={removeModalState !== null} onHide={handleRemoveModalClose} tasks={tasks} setTasks={setTasks} id={removeModalState} />
-      <RenameModal show={renameModalState !== null} onHide={handleRenameModalClose} tasks={tasks} setTasks={setTasks} id={renameModalState} />
-      {tasks.map((v, i) => renderTask(v, i, handleRenameModalShow, handleRemoveModalShow))}
+      <AddModal
+        show={add}
+        onHide={hideAddModal}
+        addTask={addTask}
+      />
+      <RemoveModal
+        show={!!taskToRemove}
+        onHide={hideRemoveModal}
+        task={taskToRemove}
+        removeTask={removeTask}
+      />
+      <RenameModal
+        show={!!taskToRename}
+        onHide={hideRenameModal}
+        task={taskToRename}
+        renameTask={renameTask}
+      />
+      {tasks.map((task, i) => (
+        <Task
+          key={task}
+          title={task}
+          remove={createShowRemoveModal(i)}
+          rename={createShowRenameModal(i)}
+        />
+      ))}
     </>
   );
 };
