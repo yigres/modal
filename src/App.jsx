@@ -8,7 +8,7 @@ import RemoveModal from './modals/RemoveModal';
 import RenameModal from './modals/RenameModal';
 
 const App = () => {
-  const [add, setAdd] = useState(false);
+  const [showAdd, setShowAdd] = useState(false);
   const [renameId, setRenameId] = useState(null);
   const [removeId, setRemoveId] = useState(null);
   const [tasks, setTasks] = useImmer(['First Task!', 'Second Task!']);
@@ -34,11 +34,11 @@ const App = () => {
     });
   };
 
-  const hideAddModal = () => setAdd(false);
+  const hideAddModal = () => setShowAdd(false);
   const hideRenameModal = () => setRenameId(null);
   const hideRemoveModal = () => setRemoveId(null);
 
-  const showAddModal = () => setAdd(true);
+  const showAddModal = () => setShowAdd(true);
   const createShowRenameModal = (id) => () => setRenameId(id);
   const createShowRemoveModal = (id) => () => setRemoveId(id);
 
@@ -47,23 +47,9 @@ const App = () => {
       <div className="mb-3">
         <button type="button" onClick={showAddModal} data-testid="item-add" className="btn btn-secondary">add</button>
       </div>
-      <AddModal
-        show={add}
-        onHide={hideAddModal}
-        addTask={addTask}
-      />
-      <RemoveModal
-        show={!!taskToRemove}
-        onHide={hideRemoveModal}
-        task={taskToRemove}
-        removeTask={removeTask}
-      />
-      <RenameModal
-        show={!!taskToRename}
-        onHide={hideRenameModal}
-        task={taskToRename}
-        renameTask={renameTask}
-      />
+      <AddModal show={showAdd} onHide={hideAddModal} addTask={addTask} />
+      <RemoveModal onHide={hideRemoveModal} task={taskToRemove} removeTask={removeTask} />
+      <RenameModal onHide={hideRenameModal} task={taskToRename} renameTask={renameTask} />
       {tasks.map((task, i) => (
         <Task
           key={task}

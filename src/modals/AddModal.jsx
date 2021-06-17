@@ -5,11 +5,7 @@ import Modal from './Modal';
 import Add from '../components/Add';
 
 const AddModal = (props) => {
-  const {
-    show,
-    onHide,
-    addTask,
-  } = props;
+  const { show, onHide, addTask } = props;
   return (
     <Modal title="Add task" show={show} onHide={onHide}>
       <Add addTask={addTask} onSubmit={onHide} />
