@@ -5,28 +5,29 @@ import { Modal, FormGroup, FormControl } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 
 const Add = (props) => {
-  const { show, onHide, tasks, setTasks } = props;
+  const { onHide, setTasks } = props;
 
   const textInput = useRef();
-
-  useEffect(() => {
-    if (show) textInput.current.focus();
-  });
 
   const formik = useFormik({
     initialValues: {
       body: '',
     },
     onSubmit: (values) => {
-      if (values.body) setTasks([...tasks, values.body]);
-      values.body = '';
+      setTasks((draft) => {
+        draft.push(values.body);
+      });
       onHide();
     },
   });
 
+  useEffect(() => {
+    textInput.current.focus();
+  }, []);
+
   return (
     <>
-      <Modal show={show} onHide={onHide}>
+      <Modal show onHide={onHide}>
         <Modal.Header closeButton>
           <Modal.Title>Add</Modal.Title>
         </Modal.Header>

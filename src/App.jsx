@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useImmer } from 'use-immer';
-import getModal from './modals/index.js';
+import getModal from './modals/index';
 
 const renderTask = (v, i, handleRenameModalShow, handleRemoveModalShow) => {
   const renderRemoveModal = () => {
@@ -23,8 +23,8 @@ const renderTask = (v, i, handleRenameModalShow, handleRemoveModalShow) => {
 const App = () => {
   const [addModalShow, setAddModalShow] = useState(false);
   const [removeModalState, setRemoveModalState] = useState(null);
-  const [renameModalState, setRenameModalState] = useImmer(null);
-  const [tasks, setTasks] = useImmer(['First Task!', 'Second Task!']);
+  const [renameModalState, setRenameModalState] = useState(null);
+  const [tasks, setTasks] = useImmer([]);
 
   const handleAddModalClose = () => setAddModalShow(false);
   const handleAddModalShow = () => setAddModalShow(true);
@@ -42,9 +42,23 @@ const App = () => {
         <button type="button" onClick={handleAddModalShow} data-testid="item-add" className="btn btn-secondary">add</button>
       </div>
 
-      <AddModal show={addModalShow} onHide={handleAddModalClose} tasks={tasks} setTasks={setTasks} />
-      <RemoveModal show={removeModalState !== null} onHide={handleRemoveModalClose} tasks={tasks} setTasks={setTasks} id={removeModalState} />
-      <RenameModal show={renameModalState !== null} onHide={handleRenameModalClose} tasks={tasks} setTasks={setTasks} id={renameModalState} />
+      { !!addModalShow && (
+        <AddModal onHide={handleAddModalClose} setTasks={setTasks} />)}
+      { removeModalState !== null && (
+        <RemoveModal
+          onHide={handleRemoveModalClose}
+          setTasks={setTasks}
+          id={removeModalState}
+        />
+      )}
+      { renameModalState !== null && (
+        <RenameModal
+          onHide={handleRenameModalClose}
+          setTasks={setTasks}
+          id={renameModalState}
+          task={tasks[renameModalState]}
+        />
+      )}
       {tasks.map((v, i) => renderTask(v, i, handleRenameModalShow, handleRemoveModalShow))}
     </>
   );

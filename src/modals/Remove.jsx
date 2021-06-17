@@ -2,18 +2,18 @@ import React from 'react';
 import { Modal, FormGroup } from 'react-bootstrap';
 
 const Remove = (props) => {
-  const { show, onHide, tasks, setTasks, id } = props;
+  const { onHide, setTasks, id } = props;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newTasks = [...tasks];
-    newTasks.splice(id, 1);
-    setTasks(newTasks);
+    setTasks((draft) => {
+      delete draft[id];
+    });
     onHide();
   };
 
   return (
-    <Modal show={show} onHide={onHide}>
+    <Modal show onHide={onHide}>
       <Modal.Header closeButton>
         <Modal.Title>Remove</Modal.Title>
       </Modal.Header>

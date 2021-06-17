@@ -3,13 +3,18 @@ import { useFormik } from 'formik';
 import { Modal, FormGroup, FormControl } from 'react-bootstrap';
 
 const Rename = (props) => {
-  const { show, onHide, tasks, setTasks, id } = props;
+  const {
+    onHide,
+    setTasks,
+    id,
+    task
+  } = props;
 
   const textInput = useRef();
 
   const formik = useFormik({
     initialValues: {
-      body: '',
+      body: task,
     },
     onSubmit: (values) => {
       if (values.body) {
@@ -20,18 +25,15 @@ const Rename = (props) => {
       onHide();
     },
   });
- //  комментарий
+
   useEffect(() => {
-    if (show) {
-      formik.setValues({"body": tasks[id]});
-      textInput.current.focus();
-      textInput.current.select();
-    }
-  },[show]);
+    textInput.current.focus();
+    textInput.current.select();
+  }, []);
 
   return (
     <>
-      <Modal show={show} onHide={onHide}>
+      <Modal show onHide={onHide}>
         <Modal.Header closeButton>
           <Modal.Title>Rename</Modal.Title>
         </Modal.Header>
