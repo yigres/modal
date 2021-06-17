@@ -22,8 +22,12 @@ const Rename = (props) => {
   });
 
   useEffect(() => {
-    if (show) textInput.current.focus();
-  });
+    if (show) {
+      formik.setValues({"body": tasks[id]});
+      textInput.current.focus();
+      textInput.current.select();
+    }
+  },[show]);
 
   return (
     <>

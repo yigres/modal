@@ -1,7 +1,6 @@
 import React from 'react';
 import { Modal, FormGroup } from 'react-bootstrap';
 
-// BEGIN (write your solution here)
 const Remove = (props) => {
   const { show, onHide, tasks, setTasks, id } = props;
 
@@ -12,7 +11,7 @@ const Remove = (props) => {
     setTasks(newTasks);
     onHide();
   };
-  // console.log(show);
+
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
@@ -30,4 +29,3 @@ const Remove = (props) => {
 };
 
 export default Remove;
-// END

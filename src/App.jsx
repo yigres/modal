@@ -5,12 +5,10 @@ import getModal from './modals/index.js';
 const renderTask = (v, i, handleRenameModalShow, handleRemoveModalShow) => {
   const renderRemoveModal = () => {
     handleRemoveModalShow(i);
-    // console.log(i);
   };
 
   const renderRenameModal = () => {
     handleRenameModalShow(i);
-    // console.log(i);
   };
 
   return (

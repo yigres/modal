@@ -10,7 +10,6 @@ const Add = (props) => {
   const textInput = useRef();
 
   useEffect(() => {
-    // console.log('useEffect() done!');
     if (show) textInput.current.focus();
   });
 
@@ -19,8 +18,6 @@ const Add = (props) => {
       body: '',
     },
     onSubmit: (values) => {
-      // console.log(tasks, values.body);
-      // });
       if (values.body) setTasks([...tasks, values.body]);
       values.body = '';
       onHide();
