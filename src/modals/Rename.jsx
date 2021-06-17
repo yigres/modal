@@ -20,7 +20,7 @@ const Rename = (props) => {
       onHide();
     },
   });
-
+ //  комментарий
   useEffect(() => {
     if (show) {
       formik.setValues({"body": tasks[id]});
