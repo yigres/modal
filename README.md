@@ -1,3 +1,10 @@
+# Modal windows
+A React component, on hooks, that implements a notebook application.  
+
+In this application, you can add, delete and edit tasks using modal windows. For any action, a modal window appears, inside which you can perform various actions.  
+
+## Ecosystem creation  
+
 npm init -y  
 npm i -D eslint  
 eslint --init  
