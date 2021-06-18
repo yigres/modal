@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 // import _ from 'lodash';
 import { useFormik } from 'formik';
 import { Modal, FormGroup, FormControl } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.css';
 
 const Add = (props) => {
   const { onHide, setTasks } = props;

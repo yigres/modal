@@ -43,7 +43,8 @@ const App = () => {
       </div>
 
       { !!addModalShow && (
-        <AddModal onHide={handleAddModalClose} setTasks={setTasks} />)}
+        <AddModal onHide={handleAddModalClose} setTasks={setTasks} />
+      )}
       { removeModalState !== null && (
         <RemoveModal
           onHide={handleRemoveModalClose}
