@@ -4,10 +4,10 @@ import { Modal, FormGroup, FormControl } from 'react-bootstrap';
 
 const Rename = (props) => {
   const {
-    onHide,
+    handleClose,
     setTasks,
     id,
-    task
+    task,
   } = props;
 
   const textInput = useRef();
@@ -22,7 +22,7 @@ const Rename = (props) => {
           draft[id] = values.body;
         });
       }
-      onHide();
+      handleClose();
     },
   });
 
@@ -32,21 +32,21 @@ const Rename = (props) => {
   }, []);
 
   return (
-    <>
-      <Modal show onHide={onHide}>
-        <Modal.Header closeButton>
-          <Modal.Title>Rename</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form onSubmit={formik.handleSubmit}>
-            <FormGroup>
-              <FormControl data-testid="input-body" name="body" required="" ref={textInput} onChange={formik.handleChange} value={formik.values.body} />
-            </FormGroup>
-            <input className="btn btn-primary" type="submit" value="submit" />
-          </form>
-        </Modal.Body>
-      </Modal>
-    </>
+    <Modal show onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>Rename</Modal.Title>
+      </Modal.Header>
+
+      <Modal.Body>
+        <form onSubmit={formik.handleSubmit}>
+          <FormGroup>
+            <FormControl data-testid="input-body" name="body" required ref={textInput} onChange={formik.handleChange} value={formik.values.body} />
+          </FormGroup>
+          <input className="btn btn-primary" type="submit" value="submit" />
+        </form>
+      </Modal.Body>
+
+    </Modal>
   );
 };
 

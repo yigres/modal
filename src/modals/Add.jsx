@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import { Modal, FormGroup, FormControl } from 'react-bootstrap';
 
 const Add = (props) => {
-  const { onHide, setTasks } = props;
+  const { handleClose, setTasks } = props;
 
   const textInput = useRef();
 
@@ -16,7 +16,7 @@ const Add = (props) => {
       setTasks((draft) => {
         draft.push(values.body);
       });
-      onHide();
+      handleClose();
     },
   });
 
@@ -26,18 +26,20 @@ const Add = (props) => {
 
   return (
     <>
-      <Modal show onHide={onHide}>
+      <Modal show onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add</Modal.Title>
         </Modal.Header>
+
         <Modal.Body>
           <form onSubmit={formik.handleSubmit}>
             <FormGroup>
-              <FormControl data-testid="input-body" name="body" required="" ref={textInput} onChange={formik.handleChange} value={formik.values.body} />
+              <FormControl data-testid="input-body" name="body" required ref={textInput} onChange={formik.handleChange} value={formik.values.body} />
             </FormGroup>
             <input className="btn btn-primary" type="submit" value="submit" />
           </form>
         </Modal.Body>
+
       </Modal>
     </>
   );

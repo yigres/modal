@@ -42,25 +42,29 @@ const App = () => {
         <button type="button" onClick={handleAddModalShow} data-testid="item-add" className="btn btn-secondary">add</button>
       </div>
 
+      {tasks.map((v, i) => renderTask(v, i, handleRenameModalShow, handleRemoveModalShow))}
+
       { !!addModalShow && (
-        <AddModal onHide={handleAddModalClose} setTasks={setTasks} />
+        <AddModal handleClose={handleAddModalClose} setTasks={setTasks} />
       )}
+
       { removeModalState !== null && (
         <RemoveModal
-          onHide={handleRemoveModalClose}
+          handleClose={handleRemoveModalClose}
           setTasks={setTasks}
           id={removeModalState}
+          task={tasks[removeModalState]}
         />
       )}
+
       { renameModalState !== null && (
         <RenameModal
-          onHide={handleRenameModalClose}
+          handleClose={handleRenameModalClose}
           setTasks={setTasks}
           id={renameModalState}
           task={tasks[renameModalState]}
         />
       )}
-      {tasks.map((v, i) => renderTask(v, i, handleRenameModalShow, handleRemoveModalShow))}
     </>
   );
 };
