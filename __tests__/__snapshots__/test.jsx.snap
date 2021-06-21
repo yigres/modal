@@ -45,59 +45,26 @@ exports[`App application 2 2`] = `
       add
     </button>
   </div>
-  <div
-    class="modal-dialog"
-  >
-    <div
-      class="modal-content"
+  <div>
+    <span
+      class="mr-3"
     >
-      <div
-        class="modal-header"
-      >
-        <div
-          class="modal-title h4"
-        >
-          Add
-        </div>
-        <button
-          class="close"
-          type="button"
-        >
-          <span
-            aria-hidden="true"
-          >
-            ×
-          </span>
-          <span
-            class="sr-only"
-          >
-            Close
-          </span>
-        </button>
-      </div>
-      <div
-        class="modal-body"
-      >
-        <form>
-          <div
-            class="form-group"
-          >
-            <input
-              class="form-control"
-              data-testid="input-body"
-              name="body"
-              required=""
-              value=""
-            />
-          </div>
-          <input
-            class="btn btn-primary"
-            type="submit"
-            value="submit"
-          />
-        </form>
-      </div>
-    </div>
+      first task!
+    </span>
+    <button
+      class="border-0 btn-link mr-3 p-0"
+      data-testid="item-rename"
+      type="button"
+    >
+      rename
+    </button>
+    <button
+      class="border-0 btn-link p-0"
+      data-testid="item-remove"
+      type="button"
+    >
+      remove
+    </button>
   </div>
 </DocumentFragment>
 `;
@@ -119,7 +86,7 @@ exports[`App application 2 3`] = `
     <span
       class="mr-3"
     >
-      first task!
+      changed name!
     </span>
     <button
       class="border-0 btn-link mr-3 p-0"
@@ -140,218 +107,6 @@ exports[`App application 2 3`] = `
 `;
 
 exports[`App application 2 4`] = `
-<DocumentFragment>
-  <div
-    class="mb-3"
-  >
-    <button
-      class="btn btn-secondary"
-      data-testid="item-add"
-      type="button"
-    >
-      add
-    </button>
-  </div>
-  <div>
-    <span
-      class="mr-3"
-    >
-      first task!
-    </span>
-    <button
-      class="border-0 btn-link mr-3 p-0"
-      data-testid="item-rename"
-      type="button"
-    >
-      rename
-    </button>
-    <button
-      class="border-0 btn-link p-0"
-      data-testid="item-remove"
-      type="button"
-    >
-      remove
-    </button>
-  </div>
-  <div
-    class="modal-dialog"
-  >
-    <div
-      class="modal-content"
-    >
-      <div
-        class="modal-header"
-      >
-        <div
-          class="modal-title h4"
-        >
-          Rename
-        </div>
-        <button
-          class="close"
-          type="button"
-        >
-          <span
-            aria-hidden="true"
-          >
-            ×
-          </span>
-          <span
-            class="sr-only"
-          >
-            Close
-          </span>
-        </button>
-      </div>
-      <div
-        class="modal-body"
-      >
-        <form>
-          <div
-            class="form-group"
-          >
-            <input
-              class="form-control"
-              data-testid="input-body"
-              name="body"
-              required=""
-              value="first task!"
-            />
-          </div>
-          <input
-            class="btn btn-primary"
-            type="submit"
-            value="submit"
-          />
-        </form>
-      </div>
-    </div>
-  </div>
-</DocumentFragment>
-`;
-
-exports[`App application 2 5`] = `
-<DocumentFragment>
-  <div
-    class="mb-3"
-  >
-    <button
-      class="btn btn-secondary"
-      data-testid="item-add"
-      type="button"
-    >
-      add
-    </button>
-  </div>
-  <div>
-    <span
-      class="mr-3"
-    >
-      changed name!
-    </span>
-    <button
-      class="border-0 btn-link mr-3 p-0"
-      data-testid="item-rename"
-      type="button"
-    >
-      rename
-    </button>
-    <button
-      class="border-0 btn-link p-0"
-      data-testid="item-remove"
-      type="button"
-    >
-      remove
-    </button>
-  </div>
-</DocumentFragment>
-`;
-
-exports[`App application 2 6`] = `
-<DocumentFragment>
-  <div
-    class="mb-3"
-  >
-    <button
-      class="btn btn-secondary"
-      data-testid="item-add"
-      type="button"
-    >
-      add
-    </button>
-  </div>
-  <div>
-    <span
-      class="mr-3"
-    >
-      changed name!
-    </span>
-    <button
-      class="border-0 btn-link mr-3 p-0"
-      data-testid="item-rename"
-      type="button"
-    >
-      rename
-    </button>
-    <button
-      class="border-0 btn-link p-0"
-      data-testid="item-remove"
-      type="button"
-    >
-      remove
-    </button>
-  </div>
-  <div
-    class="modal-dialog"
-  >
-    <div
-      class="modal-content"
-    >
-      <div
-        class="modal-header"
-      >
-        <div
-          class="modal-title h4"
-        >
-          Remove
-        </div>
-        <button
-          class="close"
-          type="button"
-        >
-          <span
-            aria-hidden="true"
-          >
-            ×
-          </span>
-          <span
-            class="sr-only"
-          >
-            Close
-          </span>
-        </button>
-      </div>
-      <div
-        class="modal-body"
-      >
-        <form>
-          <div
-            class="form-group"
-          >
-            <input
-              class="btn btn-danger"
-              type="submit"
-              value="remove"
-            />
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</DocumentFragment>
-`;
-
-exports[`App application 2 7`] = `
 <DocumentFragment>
   <div
     class="mb-3"

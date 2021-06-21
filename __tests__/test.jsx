@@ -17,13 +17,6 @@ describe('App', () => {
 
     const addButton = screen.getByTestId('item-add');
     userEvent.click(addButton);
-    // ***********
-    // console.log(addButton);
-    const fr = asFragment();
-    // console.log(Object.keys(fr));
-    // console.log(screen.getByTestId('input-body'));
-    // ***************
-    expect(fr).toMatchSnapshot();
 
     const addingSubmitButton = screen.getByText('submit');
     const addingFormInput = screen.getByTestId('input-body');
@@ -34,7 +27,6 @@ describe('App', () => {
 
     const renameLink = screen.getByTestId('item-rename');
     userEvent.click(renameLink);
-    expect(asFragment()).toMatchSnapshot();
 
     const renamingFormInput = screen.getByTestId('input-body');
     const renamingSubmitButton = screen.getByText('submit');
@@ -45,7 +37,6 @@ describe('App', () => {
 
     const removeLink = screen.getByTestId('item-remove');
     userEvent.click(removeLink);
-    expect(asFragment()).toMatchSnapshot();
 
     const removingSubmitButton = screen.getByText('remove', { selector: 'input' });
     userEvent.click(removingSubmitButton);
