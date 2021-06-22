@@ -1,41 +1,30 @@
 import React from 'react';
 import { Modal, FormGroup } from 'react-bootstrap';
 
-const Remove = (props) => {
-  const {
-    handleClose,
-    setTasks,
-    id,
-    task
-  } = props;
+const generateOnSubmit = ({ modalInfo, setItems, onHide }) => (e) => {
+  e.preventDefault();
+  setItems((items) => items.filter((i) => i.id !== modalInfo.item.id));
+  onHide();
+};
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setTasks((draft) => {
-      delete draft[id];
-    });
-    handleClose();
-  };
-  const text = `Do you want to remove: ${task}`;
+const Remove = (props) => {
+  const { onHide } = props;
+  const onSubmit = generateOnSubmit(props);
 
   return (
-    <Modal show onHide={handleClose}>
-      <Modal.Header closeButton>
+    <Modal.Dialog>
+      <Modal.Header closeButton onHide={onHide}>
         <Modal.Title>Remove</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
-        <p>
-          {text}
-        </p>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={onSubmit}>
           <FormGroup>
-            <input className="btn btn-danger" type="submit" value="remove" />
+            <input type="submit" className="btn btn-danger" value="remove" />
           </FormGroup>
         </form>
       </Modal.Body>
-
-    </Modal>
+    </Modal.Dialog>
   );
 };
 

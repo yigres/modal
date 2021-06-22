@@ -2,51 +2,46 @@ import React, { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import { Modal, FormGroup, FormControl } from 'react-bootstrap';
 
-const Rename = (props) => {
-  const {
-    handleClose,
-    setTasks,
-    id,
-    task,
-  } = props;
-
-  const textInput = useRef();
-
-  const formik = useFormik({
-    initialValues: {
-      body: task,
-    },
-    onSubmit: (values) => {
-      if (values.body) {
-        setTasks((draft) => {
-          draft[id] = values.body;
-        });
-      }
-      handleClose();
-    },
+const generateOnSubmit = ({ modalInfo, setItems, onHide }) => (values) => {
+  setItems((items) => {
+    const item = items.find((i) => i.id === modalInfo.item.id);
+    item.body = values.body;
   });
+  onHide();
+};
 
+const Rename = (props) => {
+  const { onHide, modalInfo } = props;
+  const { item } = modalInfo;
+  const f = useFormik({ onSubmit: generateOnSubmit(props), initialValues: item });
+  const inputRef = useRef();
   useEffect(() => {
-    textInput.current.focus();
-    textInput.current.select();
+    inputRef.current.select();
   }, []);
 
   return (
-    <Modal show onHide={handleClose}>
-      <Modal.Header closeButton>
+    <Modal.Dialog>
+      <Modal.Header closeButton onHide={onHide}>
         <Modal.Title>Rename</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
-        <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={f.handleSubmit}>
           <FormGroup>
-            <FormControl data-testid="input-body" name="body" required ref={textInput} onChange={formik.handleChange} value={formik.values.body} />
+            <FormControl
+              required
+              ref={inputRef}
+              onChange={f.handleChange}
+              onBlur={f.handleBlur}
+              value={f.values.body}
+              data-testid="input-body"
+              name="body"
+            />
           </FormGroup>
-          <input className="btn btn-primary" type="submit" value="submit" />
+          <input type="submit" className="btn btn-primary" value="submit" />
         </form>
       </Modal.Body>
-
-    </Modal>
+    </Modal.Dialog>
   );
 };
 

@@ -1,47 +1,48 @@
 import React, { useEffect, useRef } from 'react';
-// import _ from 'lodash';
+import _ from 'lodash';
 import { useFormik } from 'formik';
 import { Modal, FormGroup, FormControl } from 'react-bootstrap';
 
-const Add = (props) => {
-  const { handleClose, setTasks } = props;
-
-  const textInput = useRef();
-
-  const formik = useFormik({
-    initialValues: {
-      body: '',
-    },
-    onSubmit: (values) => {
-      setTasks((draft) => {
-        draft.push(values.body);
-      });
-      handleClose();
-    },
+const generateOnSubmit = ({ setItems, onHide }) => (values) => {
+  const item = { id: _.uniqueId(), body: values.body };
+  setItems((items) => {
+    items.push(item);
   });
+  onHide();
+};
 
+const Add = (props) => {
+  const { onHide } = props;
+  const f = useFormik({ onSubmit: generateOnSubmit(props), initialValues: { body: '' } });
+
+  const inputRef = useRef();
   useEffect(() => {
-    textInput.current.focus();
+    inputRef.current.focus();
   }, []);
 
   return (
-    <>
-      <Modal show onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add</Modal.Title>
-        </Modal.Header>
+    <Modal.Dialog>
+      <Modal.Header closeButton onHide={onHide}>
+        <Modal.Title>Add</Modal.Title>
+      </Modal.Header>
 
-        <Modal.Body>
-          <form onSubmit={formik.handleSubmit}>
-            <FormGroup>
-              <FormControl data-testid="input-body" name="body" required ref={textInput} onChange={formik.handleChange} value={formik.values.body} />
-            </FormGroup>
-            <input className="btn btn-primary" type="submit" value="submit" />
-          </form>
-        </Modal.Body>
-
-      </Modal>
-    </>
+      <Modal.Body>
+        <form onSubmit={f.handleSubmit}>
+          <FormGroup>
+            <FormControl
+              required
+              ref={inputRef}
+              onChange={f.handleChange}
+              onBlur={f.handleBlur}
+              value={f.values.body}
+              data-testid="input-body"
+              name="body"
+            />
+          </FormGroup>
+          <input type="submit" className="btn btn-primary" value="submit" />
+        </form>
+      </Modal.Body>
+    </Modal.Dialog>
   );
 };
 

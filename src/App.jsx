@@ -2,69 +2,36 @@ import React, { useState } from 'react';
 import { useImmer } from 'use-immer';
 import getModal from './modals/index';
 
-const renderTask = (v, i, handleRenameModalShow, handleRemoveModalShow) => {
-  const renderRemoveModal = () => {
-    handleRemoveModalShow(i);
-  };
+const renderItem = ({ item, showModal }) => (
+  <div key={item.id}>
+    <span className="mr-3">{item.body}</span>
+    <button type="button" className="border-0 btn-link mr-3 p-0" data-testid="item-rename" onClick={() => showModal('renaming', item)}>rename</button>
+    <button type="button" className="border-0 btn-link p-0" data-testid="item-remove" onClick={() => showModal('removing', item)}>remove</button>
+  </div>
+);
 
-  const renderRenameModal = () => {
-    handleRenameModalShow(i);
-  };
+const renderModal = ({ modalInfo, hideModal, setItems }) => {
+  if (!modalInfo.type) {
+    return null;
+  }
 
-  return (
-    <div key={i}>
-      <span className="mr-3">{v}</span>
-      <button type="button" className="border-0 btn-link mr-3 p-0" data-testid="item-rename" onClick={renderRenameModal}>rename</button>
-      <button type="button" className="border-0 btn-link p-0" data-testid="item-remove" onClick={renderRemoveModal}>remove</button>
-    </div>
-  );
+  const Component = getModal(modalInfo.type);
+  return <Component modalInfo={modalInfo} setItems={setItems} onHide={hideModal} />;
 };
 
 const App = () => {
-  const [addModalShow, setAddModalShow] = useState(false);
-  const [removeModalState, setRemoveModalState] = useState(null);
-  const [renameModalState, setRenameModalState] = useState(null);
-  const [tasks, setTasks] = useImmer([]);
+  const [items, setItems] = useImmer([]);
+  const [modalInfo, setModalInfo] = useState({ type: null, item: null });
+  const hideModal = () => setModalInfo({ type: null, item: null });
+  const showModal = (type, item = null) => setModalInfo({ type, item });
 
-  const handleAddModalClose = () => setAddModalShow(false);
-  const handleAddModalShow = () => setAddModalShow(true);
-  const handleRemoveModalClose = () => setRemoveModalState(null);
-  const handleRemoveModalShow = (id) => setRemoveModalState(id);
-  const handleRenameModalClose = () => setRenameModalState(null);
-  const handleRenameModalShow = (id) => setRenameModalState(id);
-
-  const AddModal = getModal('adding');
-  const RemoveModal = getModal('removing');
-  const RenameModal = getModal('renaming');
   return (
     <>
       <div className="mb-3">
-        <button type="button" onClick={handleAddModalShow} data-testid="item-add" className="btn btn-secondary">add</button>
+        <button type="button" onClick={() => showModal('adding')} data-testid="item-add" className="btn btn-secondary">add</button>
       </div>
-
-      {tasks.map((v, i) => renderTask(v, i, handleRenameModalShow, handleRemoveModalShow))}
-
-      { !!addModalShow && (
-        <AddModal handleClose={handleAddModalClose} setTasks={setTasks} />
-      )}
-
-      { removeModalState !== null && (
-        <RemoveModal
-          handleClose={handleRemoveModalClose}
-          setTasks={setTasks}
-          id={removeModalState}
-          task={tasks[removeModalState]}
-        />
-      )}
-
-      { renameModalState !== null && (
-        <RenameModal
-          handleClose={handleRenameModalClose}
-          setTasks={setTasks}
-          id={renameModalState}
-          task={tasks[renameModalState]}
-        />
-      )}
+      {items.map((item) => renderItem({ item, showModal }))}
+      {renderModal({ modalInfo, hideModal, setItems })}
     </>
   );
 };
